@@ -1,14 +1,4 @@
-import { GuideType } from '../types';
-
-export type GuideCategory = {
-  id: string;
-  type: GuideType;
-  title: string;
-  description: string;
-  iconName: string;
-  color: string;
-  slug: string;
-};
+import type { GuideCategory } from '../types';
 
 export const guides: GuideCategory[] = [
   {

@@ -71,7 +71,7 @@ const cities = [
 
 const categories: Array<{
   id: LocationCategory;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
   description: string;
 }> = [
