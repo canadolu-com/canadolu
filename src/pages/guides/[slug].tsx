@@ -16,6 +16,10 @@ import {
 import Link from "next/link";
 import { guides, GuideCategory } from "@/lib/data/guides";
 import { useRouter } from "next/router";
+import { MDXProvider } from "@mdx-js/react";
+
+// Import MDX content
+import HousingGuide from "@/content/guides/housing.mdx";
 
 const iconMap = {
   Book,
@@ -26,6 +30,51 @@ const iconMap = {
   Car,
   DollarSign,
   Globe,
+};
+
+const components = {
+  h1: (props: any) => (
+    <h1 className="text-3xl font-bold text-brand-primary mb-6" {...props} />
+  ),
+  h2: (props: any) => (
+    <h2
+      className="text-2xl font-semibold text-brand-primary mt-8 mb-4"
+      {...props}
+    />
+  ),
+  h3: (props: any) => (
+    <h3
+      className="text-xl font-medium text-brand-primary mt-6 mb-3"
+      {...props}
+    />
+  ),
+  p: (props: any) => (
+    <p className="text-brand-text-secondary my-4 leading-relaxed" {...props} />
+  ),
+  ul: (props: any) => (
+    <ul className="list-disc list-outside ml-6 my-4 space-y-2" {...props} />
+  ),
+  ol: (props: any) => (
+    <ol className="list-decimal list-outside ml-6 my-4 space-y-2" {...props} />
+  ),
+  li: (props: any) => <li className="text-brand-text-secondary" {...props} />,
+  a: (props: any) => (
+    <a
+      className="text-brand-primary hover:text-brand-primary-light underline transition-colors"
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  ),
+  blockquote: (props: any) => (
+    <blockquote
+      className="border-l-4 border-brand-primary pl-4 my-4 italic text-brand-text-secondary"
+      {...props}
+    />
+  ),
+  strong: (props: any) => (
+    <strong className="font-semibold text-brand-primary" {...props} />
+  ),
 };
 
 interface GuidePageProps {
@@ -48,6 +97,8 @@ export default function GuidePage({ guide }: GuidePageProps) {
   }
 
   const Icon = iconMap[guide.iconName as keyof typeof iconMap];
+
+  const GuideContent = guide.type === "housing" ? HousingGuide : null;
 
   return (
     <MainLayout>
@@ -80,24 +131,32 @@ export default function GuidePage({ guide }: GuidePageProps) {
               </div>
             </CardHeader>
             <CardContent className="pt-6">
-              <div className="prose prose-brand max-w-none">
-                <p>
-                  This guide is coming soon. It will include detailed
-                  information about:
-                </p>
-                <ul>
-                  <li>Overview and key concepts</li>
-                  <li>Step-by-step processes</li>
-                  <li>Important resources and contacts</li>
-                  <li>Tips from experienced community members</li>
-                  <li>Frequently asked questions</li>
-                </ul>
-                <p>
-                  We are currently working with community experts to create
-                  comprehensive, accurate, and helpful content for this guide.
-                  Check back soon!
-                </p>
-              </div>
+              <article className="prose prose-brand max-w-none">
+                <MDXProvider components={components}>
+                  {GuideContent ? (
+                    <GuideContent />
+                  ) : (
+                    <div>
+                      <p>
+                        This guide is coming soon. It will include detailed
+                        information about:
+                      </p>
+                      <ul>
+                        <li>Overview and key concepts</li>
+                        <li>Step-by-step processes</li>
+                        <li>Important resources and contacts</li>
+                        <li>Tips from experienced community members</li>
+                        <li>Frequently asked questions</li>
+                      </ul>
+                      <p>
+                        We are currently working with community experts to
+                        create comprehensive, accurate, and helpful content for
+                        this guide. Check back soon!
+                      </p>
+                    </div>
+                  )}
+                </MDXProvider>
+              </article>
             </CardContent>
           </Card>
         </div>
