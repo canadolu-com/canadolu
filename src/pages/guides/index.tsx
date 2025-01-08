@@ -31,11 +31,11 @@ export default function GuidesPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h1 className="text-4xl font-bold text-brand-primary mb-4">
-            Newcomer Guides
+            Rehberler
           </h1>
           <p className="text-lg text-brand-text-secondary">
-            Comprehensive guides to help Turkish newcomers navigate life in
-            Canada
+            Türk göçmenlerin Kanada&apos;daki yaşama uyum sağlamasına yardımcı
+            olacak kapsamlı rehberler
           </p>
         </div>
 

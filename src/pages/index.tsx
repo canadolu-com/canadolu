@@ -9,7 +9,6 @@ import {
 import MainLayout from "@/components/layout/MainLayout";
 import Link from "next/link";
 import { MapIcon, BookOpen, Home, Building2, ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -27,25 +26,25 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block mb-6 px-6 py-3 bg-brand-hover-light rounded-full border border-brand-border-light">
               <span className="text-brand-text-primary font-medium">
-                Supporting Turkish Newcomers in Canada 🇨🇦 🇹🇷
+                Topluluk Desteği 🇨🇦 🇹🇷
               </span>
             </div>
 
             <h1 className="text-6xl font-bold mb-6 text-brand-primary leading-tight">
-              Welcome to Canadolu
+              Kanada'ya Hoş Geldin!
             </h1>
 
             <p className="text-2xl text-brand-text-secondary mb-12 font-medium max-w-2xl mx-auto leading-relaxed">
-              Your trusted guide for Turkish newcomers in Canada. Find essential
-              resources, locations, and community support to make your
-              transition smoother.
+              Kanada'daki yeni yaşamın için topluluk rehberin. İhtiyacınız olan
+              tüm kaynaklara, önemli lokasyonlara ve topluluk desteğine buradan
+              ulaşabilirsin.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/map">
                 <Button className="group bg-brand-primary hover:bg-brand-primary-light text-brand-snow-white font-medium h-14 px-8 text-lg rounded-full w-full sm:w-auto transition-all duration-300">
                   <MapIcon className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
-                  Explore Map
+                  Haritayı Keşfet
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
@@ -55,7 +54,7 @@ export default function HomePage() {
                   className="group border-2 border-brand-primary text-brand-primary hover:bg-brand-hover-light font-medium h-14 px-8 text-lg rounded-full w-full sm:w-auto transition-all duration-300"
                 >
                   <BookOpen className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
-                  View Guides
+                  Rehberleri İncele
                 </Button>
               </Link>
             </div>
@@ -71,7 +70,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="inline-block text-4xl font-bold text-brand-text-primary relative">
-              What We Offer
+              Burada neler bulabilirsin?
               <span className="absolute -bottom-4 left-0 w-full h-1 bg-gradient-to-r from-brand-primary to-brand-primary-light rounded-full opacity-80"></span>
             </h2>
           </div>
@@ -84,17 +83,17 @@ export default function HomePage() {
                     <MapIcon className="h-8 w-8 text-brand-primary" />
                   </div>
                   <CardTitle className="text-2xl text-brand-text-primary">
-                    Interactive Map
+                    Türk İşletmeleri
                   </CardTitle>
                 </div>
                 <CardDescription className="text-lg text-brand-text-secondary">
-                  Find Turkish markets, restaurants, and community centers near
-                  you
+                  Çevrenizdeki Türk marketleri, restoranları ve topluluk
+                  merkezlerini keşfedin
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-brand-text-muted">
-                Discover locations that matter to Turkish newcomers, with
-                detailed information and directions.
+                Çevrenizdeki Türk marketleri, restoranları ve topluluk
+                merkezlerini keşfedin
               </CardContent>
             </Card>
 
@@ -105,16 +104,16 @@ export default function HomePage() {
                     <Home className="h-8 w-8 text-brand-primary" />
                   </div>
                   <CardTitle className="text-2xl text-brand-text-primary">
-                    Housing Guide
+                    Konut Rehberi
                   </CardTitle>
                 </div>
                 <CardDescription className="text-lg text-brand-text-secondary">
-                  Everything you need to know about finding a home
+                  Ev bulma sürecinde bilmeniz gereken her şey
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-brand-text-muted">
-                Learn about neighborhoods, rental processes, and important
-                considerations for housing in Canada.
+                Kanada'da mahalleler, kiralama süreçleri ve konaklamayla ilgili
+                önemli bilgileri öğrenin.
               </CardContent>
             </Card>
 
@@ -125,16 +124,16 @@ export default function HomePage() {
                     <Building2 className="h-8 w-8 text-brand-primary" />
                   </div>
                   <CardTitle className="text-2xl text-brand-text-primary">
-                    Settlement Resources
+                    Yerleşim Kaynakları
                   </CardTitle>
                 </div>
                 <CardDescription className="text-lg text-brand-text-secondary">
-                  Essential information for newcomers
+                  Yeni gelenler için temel bilgiler
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-brand-text-muted">
-                Access guides about healthcare, banking, education, and other
-                crucial aspects of settling in Canada.
+                Sağlık hizmetleri, bankacılık, eğitim ve Kanada'ya yerleşme
+                sürecindeki diğer önemli konular hakkında rehberlere ulaşın.
               </CardContent>
             </Card>
           </div>

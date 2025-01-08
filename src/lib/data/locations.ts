@@ -1,4 +1,4 @@
-import { Location } from '../types';
+import type { Location } from '../types';
 
 export const locations: Location[] = [
   {
@@ -13,21 +13,21 @@ export const locations: Location[] = [
     address: '846 Wilson Ave, North York, ON M3K 1E5',
     phone: '(416) 633-3383',
     website: 'http://troyrestaurant.ca',
-    description: 'Authentic Turkish cuisine in North York',
-    tags: ['restaurant', 'turkish-cuisine', 'halal'],
+    description: "North York'da otantik Türk mutfağı",
+    tags: ['restoran', 'türk-mutfağı', 'helal'],
     hours: {
-      monday: '11:00 AM - 10:00 PM',
-      tuesday: '11:00 AM - 10:00 PM',
-      wednesday: '11:00 AM - 10:00 PM',
-      thursday: '11:00 AM - 10:00 PM',
-      friday: '11:00 AM - 11:00 PM',
-      saturday: '11:00 AM - 11:00 PM',
-      sunday: '11:00 AM - 10:00 PM'
+      monday: '11:00 - 22:00',
+      tuesday: '11:00 - 22:00',
+      wednesday: '11:00 - 22:00',
+      thursday: '11:00 - 22:00',
+      friday: '11:00 - 23:00',
+      saturday: '11:00 - 23:00',
+      sunday: '11:00 - 22:00'
     }
   },
   {
     id: '2',
-    name: 'Anatolia Turkish Market',
+    name: 'Anatolia Türk Market',
     category: 'market',
     coordinates: {
       lat: 43.7849,
@@ -36,20 +36,220 @@ export const locations: Location[] = [
     city: 'Toronto',
     address: '127 Dufferin St, Toronto, ON M6K 1Y9',
     phone: '(416) 538-8787',
-    description: 'Turkish grocery store with imported products',
-    tags: ['market', 'grocery', 'turkish-products'],
+    description: 'İthal ürünlerin bulunduğu Türk marketi',
+    tags: ['market', 'bakkal', 'türk-ürünleri'],
     hours: {
-      monday: '9:00 AM - 8:00 PM',
-      tuesday: '9:00 AM - 8:00 PM',
-      wednesday: '9:00 AM - 8:00 PM',
-      thursday: '9:00 AM - 8:00 PM',
-      friday: '9:00 AM - 8:00 PM',
-      saturday: '9:00 AM - 7:00 PM',
-      sunday: '10:00 AM - 6:00 PM'
+      monday: '09:00 - 20:00',
+      tuesday: '09:00 - 20:00',
+      wednesday: '09:00 - 20:00',
+      thursday: '09:00 - 20:00',
+      friday: '09:00 - 20:00',
+      saturday: '09:00 - 19:00',
+      sunday: '10:00 - 18:00'
     }
   },
   {
     id: '3',
+    name: 'Türk Toplum Merkezi',
+    category: 'community',
+    coordinates: {
+      lat: 43.7731,
+      lng: -79.3458
+    },
+    city: 'North York',
+    address: '789 Don Mills Rd, North York, ON M3C 1T5',
+    phone: '(416) 555-0123',
+    website: 'https://turkishcommunity.ca',
+    description: 'Kültürel programlar ve destek hizmetleri sunan toplum merkezi',
+    tags: ['topluluk', 'kültür-merkezi', 'etkinlikler']
+  },
+  {
+    id: '4',
+    name: 'Türk Tıp Kliniği',
+    category: 'health',
+    coordinates: {
+      lat: 43.8563,
+      lng: -79.5085
+    },
+    city: 'Vaughan',
+    address: '456 Clark Ave W, Vaughan, ON L4J 7K6',
+    phone: '(905) 555-0456',
+    description: 'Türkçe konuşan personele sahip tıp kliniği',
+    tags: ['sağlık', 'tıbbi', 'türkçe-konuşan'],
+    hours: {
+      monday: '09:00 - 17:00',
+      tuesday: '09:00 - 17:00',
+      wednesday: '09:00 - 17:00',
+      thursday: '09:00 - 17:00',
+      friday: '09:00 - 17:00'
+    }
+  },
+  {
+    id: '5',
+    name: 'İstanbul Kafe',
+    category: 'restaurant',
+    coordinates: {
+      lat: 44.3894,
+      lng: -79.6903
+    },
+    city: 'Barrie',
+    address: '123 Dunlop St E, Barrie, ON L4M 1A5',
+    phone: '(705) 555-0789',
+    description: 'Barrie&apos;de Türk kafe ve fırını',
+    tags: ['kafe', 'fırın', 'türk-mutfağı'],
+    hours: {
+      monday: '08:00 - 20:00',
+      tuesday: '08:00 - 20:00',
+      wednesday: '08:00 - 20:00',
+      thursday: '08:00 - 20:00',
+      friday: '08:00 - 21:00',
+      saturday: '09:00 - 21:00',
+      sunday: '09:00 - 19:00'
+    }
+  },
+  {
+    id: '6',
+    name: 'Türk Tercüme Hizmetleri',
+    category: 'services',
+    coordinates: {
+      lat: 43.7184,
+      lng: -79.5181
+    },
+    city: 'Etobicoke',
+    address: '321 Islington Ave, Etobicoke, ON M8V 3B1',
+    phone: '(416) 555-9012',
+    website: 'https://turkishtranslation.ca',
+    description: 'Profesyonel tercüme ve çeviri hizmetleri',
+    tags: ['tercüme', 'çeviri', 'belgeler'],
+    hours: {
+      monday: '09:00 - 17:00',
+      tuesday: '09:00 - 17:00',
+      wednesday: '09:00 - 17:00',
+      thursday: '09:00 - 17:00',
+      friday: '09:00 - 17:00'
+    }
+  },
+  {
+    id: '7',
+    name: 'İstanbul Kebap Evi',
+    category: 'restaurant',
+    coordinates: { lat: 43.6544, lng: -79.3807 },
+    city: 'Toronto',
+    address: '654 Yonge St, Toronto, ON M4Y 2A6',
+    phone: '(416) 555-1234',
+    description: 'Toronto şehir merkezinde geleneksel Türk kebapları ve mezeler',
+    tags: ['restoran', 'kebap', 'helal'],
+    hours: {
+      monday: '11:00 - 23:00',
+      tuesday: '11:00 - 23:00',
+      wednesday: '11:00 - 23:00',
+      thursday: '11:00 - 23:00',
+      friday: '11:00 - 00:00',
+      saturday: '11:00 - 00:00',
+      sunday: '12:00 - 22:00'
+    }
+  },
+  {
+    id: '8',
+    name: 'Kapadokya Restaurant',
+    category: 'restaurant',
+    coordinates: { lat: 43.7828, lng: -79.4181 },
+    city: 'North York',
+    address: '5241 Yonge St, North York, ON M2N 5P8',
+    phone: '(416) 555-2345',
+    website: 'http://cappadocia.ca',
+    description: 'Otantik atmosfere sahip lüks Türk restoranı',
+    tags: ['restoran', 'lüks-yemek', 'türk-mutfağı'],
+    hours: {
+      monday: '12:00 - 22:00',
+      tuesday: '12:00 - 22:00',
+      wednesday: '12:00 - 22:00',
+      thursday: '12:00 - 22:00',
+      friday: '12:00 - 23:00',
+      saturday: '12:00 - 23:00',
+      sunday: '12:00 - 21:00'
+    }
+  },
+  {
+    id: '9',
+    name: 'Türk Çarşısı',
+    category: 'market',
+    coordinates: { lat: 43.7756, lng: -79.4141 },
+    city: 'North York',
+    address: '5418 Yonge St, North York, ON M2N 5R5',
+    phone: '(416) 555-3456',
+    description: 'Taze ürünler ve ithal malların bulunduğu büyük Türk süpermarketi',
+    tags: ['market', 'bakkal', 'fırın'],
+    hours: {
+      monday: '08:00 - 21:00',
+      tuesday: '08:00 - 21:00',
+      wednesday: '08:00 - 21:00',
+      thursday: '08:00 - 21:00',
+      friday: '08:00 - 21:00',
+      saturday: '08:00 - 20:00',
+      sunday: '09:00 - 19:00'
+    }
+  },
+  {
+    id: '10',
+    name: 'Akdeniz Market',
+    category: 'market',
+    coordinates: { lat: 43.8234, lng: -79.5435 },
+    city: 'Vaughan',
+    address: '7700 Bathurst St, Vaughan, ON L4J 7K3',
+    phone: '(905) 555-4567',
+    description: 'Türk ve Akdeniz ürünleri satan market',
+    tags: ['market', 'bakkal', 'akdeniz'],
+    hours: {
+      monday: '09:00 - 20:00',
+      tuesday: '09:00 - 20:00',
+      wednesday: '09:00 - 20:00',
+      thursday: '09:00 - 20:00',
+      friday: '09:00 - 20:00',
+      saturday: '09:00 - 19:00',
+      sunday: '10:00 - 18:00'
+    }
+  },
+  {
+    id: '11',
+    name: 'Türk Aile Sağlığı Kliniği',
+    category: 'health',
+    coordinates: { lat: 43.7731, lng: -79.3458 },
+    city: 'Toronto',
+    address: '245 Eglinton Ave E, Toronto, ON M4P 3B7',
+    phone: '(416) 555-5678',
+    website: 'http://turkishfamilyhealth.ca',
+    description: 'Türkçe konuşan doktorların bulunduğu aile hekimliği',
+    tags: ['sağlık', 'aile-hekimi', 'türkçe-konuşan'],
+    hours: {
+      monday: '09:00 - 17:00',
+      tuesday: '09:00 - 17:00',
+      wednesday: '09:00 - 17:00',
+      thursday: '09:00 - 17:00',
+      friday: '09:00 - 15:00'
+    }
+  },
+  {
+    id: '12',
+    name: 'Anadolu Diş Kliniği',
+    category: 'health',
+    coordinates: { lat: 43.7852, lng: -79.4237 },
+    city: 'North York',
+    address: '5000 Yonge St, North York, ON M2N 7E9',
+    phone: '(416) 555-6789',
+    website: 'http://anatoliandental.ca',
+    description: 'Türkçe konuşan personele sahip diş kliniği',
+    tags: ['sağlık', 'diş', 'türkçe-konuşan'],
+    hours: {
+      monday: '09:00 - 18:00',
+      tuesday: '09:00 - 18:00',
+      wednesday: '09:00 - 18:00',
+      thursday: '09:00 - 18:00',
+      friday: '09:00 - 16:00'
+    }
+  },
+  {
+    id: '13',
     name: 'Turkish Community Center',
     category: 'community',
     coordinates: {
@@ -64,7 +264,7 @@ export const locations: Location[] = [
     tags: ['community', 'cultural-center', 'events']
   },
   {
-    id: '4',
+    id: '14',
     name: 'Turkish Medical Clinic',
     category: 'health',
     coordinates: {
@@ -85,7 +285,7 @@ export const locations: Location[] = [
     }
   },
   {
-    id: '5',
+    id: '15',
     name: 'Istanbul Cafe',
     category: 'restaurant',
     coordinates: {
@@ -108,7 +308,7 @@ export const locations: Location[] = [
     }
   },
   {
-    id: '6',
+    id: '16',
     name: 'Turkish Translation Services',
     category: 'services',
     coordinates: {
@@ -127,266 +327,6 @@ export const locations: Location[] = [
       wednesday: '9:00 AM - 5:00 PM',
       thursday: '9:00 AM - 5:00 PM',
       friday: '9:00 AM - 5:00 PM'
-    }
-  },
-  {
-    id: '3',
-    name: 'Istanbul Kebab House',
-    category: 'restaurant',
-    coordinates: { lat: 43.6544, lng: -79.3807 },
-    city: 'Toronto',
-    address: '654 Yonge St, Toronto, ON M4Y 2A6',
-    phone: '(416) 555-1234',
-    description: 'Traditional Turkish kebabs and mezze in downtown Toronto',
-    tags: ['restaurant', 'kebab', 'halal'],
-    hours: {
-      monday: '11:00 AM - 11:00 PM',
-      tuesday: '11:00 AM - 11:00 PM',
-      wednesday: '11:00 AM - 11:00 PM',
-      thursday: '11:00 AM - 11:00 PM',
-      friday: '11:00 AM - 12:00 AM',
-      saturday: '11:00 AM - 12:00 AM',
-      sunday: '12:00 PM - 10:00 PM'
-    }
-  },
-  {
-    id: '4',
-    name: 'Cappadocia Restaurant',
-    category: 'restaurant',
-    coordinates: { lat: 43.7828, lng: -79.4181 },
-    city: 'North York',
-    address: '5241 Yonge St, North York, ON M2N 5P8',
-    phone: '(416) 555-2345',
-    website: 'http://cappadocia.ca',
-    description: 'Fine dining Turkish restaurant with authentic atmosphere',
-    tags: ['restaurant', 'fine-dining', 'turkish-cuisine'],
-    hours: {
-      monday: '12:00 PM - 10:00 PM',
-      tuesday: '12:00 PM - 10:00 PM',
-      wednesday: '12:00 PM - 10:00 PM',
-      thursday: '12:00 PM - 10:00 PM',
-      friday: '12:00 PM - 11:00 PM',
-      saturday: '12:00 PM - 11:00 PM',
-      sunday: '12:00 PM - 9:00 PM'
-    }
-  },
-  {
-    id: '5',
-    name: 'Turkish Bazaar',
-    category: 'market',
-    coordinates: { lat: 43.7756, lng: -79.4141 },
-    city: 'North York',
-    address: '5418 Yonge St, North York, ON M2N 5R5',
-    phone: '(416) 555-3456',
-    description: 'Large Turkish supermarket with fresh produce and imported goods',
-    tags: ['market', 'grocery', 'bakery'],
-    hours: {
-      monday: '8:00 AM - 9:00 PM',
-      tuesday: '8:00 AM - 9:00 PM',
-      wednesday: '8:00 AM - 9:00 PM',
-      thursday: '8:00 AM - 9:00 PM',
-      friday: '8:00 AM - 9:00 PM',
-      saturday: '8:00 AM - 8:00 PM',
-      sunday: '9:00 AM - 7:00 PM'
-    }
-  },
-  {
-    id: '6',
-    name: 'Mediterranean Market',
-    category: 'market',
-    coordinates: { lat: 43.8234, lng: -79.5435 },
-    city: 'Vaughan',
-    address: '7700 Bathurst St, Vaughan, ON L4J 7K3',
-    phone: '(905) 555-4567',
-    description: 'Turkish and Mediterranean grocery store',
-    tags: ['market', 'grocery', 'mediterranean'],
-    hours: {
-      monday: '9:00 AM - 8:00 PM',
-      tuesday: '9:00 AM - 8:00 PM',
-      wednesday: '9:00 AM - 8:00 PM',
-      thursday: '9:00 AM - 8:00 PM',
-      friday: '9:00 AM - 8:00 PM',
-      saturday: '9:00 AM - 7:00 PM',
-      sunday: '10:00 AM - 6:00 PM'
-    }
-  },
-  {
-    id: '7',
-    name: 'Turkish Family Health Clinic',
-    category: 'health',
-    coordinates: { lat: 43.7731, lng: -79.3458 },
-    city: 'Toronto',
-    address: '245 Eglinton Ave E, Toronto, ON M4P 3B7',
-    phone: '(416) 555-5678',
-    website: 'http://turkishfamilyhealth.ca',
-    description: 'Family medical practice with Turkish-speaking doctors',
-    tags: ['healthcare', 'family-doctor', 'turkish-speaking'],
-    hours: {
-      monday: '9:00 AM - 5:00 PM',
-      tuesday: '9:00 AM - 5:00 PM',
-      wednesday: '9:00 AM - 5:00 PM',
-      thursday: '9:00 AM - 5:00 PM',
-      friday: '9:00 AM - 3:00 PM'
-    }
-  },
-  {
-    id: '8',
-    name: 'Anatolian Dental Care',
-    category: 'health',
-    coordinates: { lat: 43.7852, lng: -79.4237 },
-    city: 'North York',
-    address: '5000 Yonge St, North York, ON M2N 7E9',
-    phone: '(416) 555-6789',
-    website: 'http://anatoliandental.ca',
-    description: 'Dental clinic with Turkish-speaking staff',
-    tags: ['healthcare', 'dental', 'turkish-speaking'],
-    hours: {
-      monday: '9:00 AM - 6:00 PM',
-      tuesday: '9:00 AM - 6:00 PM',
-      wednesday: '9:00 AM - 6:00 PM',
-      thursday: '9:00 AM - 6:00 PM',
-      friday: '9:00 AM - 4:00 PM'
-    }
-  },
-  {
-    id: '9',
-    name: 'Turkish Cultural Center',
-    category: 'community',
-    coordinates: { lat: 43.7654, lng: -79.4118 },
-    city: 'Toronto',
-    address: '123 Eglinton Ave W, Toronto, ON M4R 2H8',
-    phone: '(416) 555-7890',
-    website: 'http://turkishculturalcenter.ca',
-    description: 'Cultural center offering language classes and community events',
-    tags: ['community', 'culture', 'education']
-  },
-  {
-    id: '10',
-    name: 'Turkish Youth Association',
-    category: 'community',
-    coordinates: { lat: 43.7912, lng: -79.4478 },
-    city: 'North York',
-    address: '567 Sheppard Ave W, North York, ON M3H 2R9',
-    phone: '(416) 555-8901',
-    description: 'Youth organization for Turkish-Canadian community',
-    tags: ['community', 'youth', 'activities']
-  },
-  {
-    id: '11',
-    name: 'Turkish Legal Services',
-    category: 'services',
-    coordinates: { lat: 43.7711, lng: -79.4117 },
-    city: 'Toronto',
-    address: '2300 Yonge St, Toronto, ON M4P 1E4',
-    phone: '(416) 555-9012',
-    website: 'http://turkishlegal.ca',
-    description: 'Legal services with Turkish-speaking lawyers',
-    tags: ['legal', 'immigration', 'turkish-speaking'],
-    hours: {
-      monday: '9:00 AM - 5:00 PM',
-      tuesday: '9:00 AM - 5:00 PM',
-      wednesday: '9:00 AM - 5:00 PM',
-      thursday: '9:00 AM - 5:00 PM',
-      friday: '9:00 AM - 5:00 PM'
-    }
-  },
-  {
-    id: '12',
-    name: 'Bosphorus Travel Agency',
-    category: 'services',
-    coordinates: { lat: 43.7845, lng: -79.4195 },
-    city: 'North York',
-    address: '5150 Yonge St, North York, ON M2N 6L8',
-    phone: '(416) 555-0123',
-    website: 'http://bosphorustravel.ca',
-    description: 'Travel agency specializing in Turkey trips',
-    tags: ['travel', 'tourism', 'flights'],
-    hours: {
-      monday: '9:30 AM - 6:00 PM',
-      tuesday: '9:30 AM - 6:00 PM',
-      wednesday: '9:30 AM - 6:00 PM',
-      thursday: '9:30 AM - 6:00 PM',
-      friday: '9:30 AM - 6:00 PM',
-      saturday: '10:00 AM - 4:00 PM'
-    }
-  },
-  {
-    id: '13',
-    name: 'Anatolia Express',
-    category: 'restaurant',
-    coordinates: { lat: 43.7738, lng: -79.4141 },
-    city: 'North York',
-    address: '4444 Yonge St, North York, ON M2N 5M5',
-    phone: '(416) 555-1234',
-    description: 'Quick-service Turkish restaurant',
-    tags: ['restaurant', 'fast-food', 'kebab'],
-    hours: {
-      monday: '10:00 AM - 10:00 PM',
-      tuesday: '10:00 AM - 10:00 PM',
-      wednesday: '10:00 AM - 10:00 PM',
-      thursday: '10:00 AM - 10:00 PM',
-      friday: '10:00 AM - 11:00 PM',
-      saturday: '11:00 AM - 11:00 PM',
-      sunday: '11:00 AM - 9:00 PM'
-    }
-  },
-  {
-    id: '14',
-    name: 'Turkish Delight Cafe',
-    category: 'restaurant',
-    coordinates: { lat: 43.6579, lng: -79.3980 },
-    city: 'Toronto',
-    address: '321 Queen St W, Toronto, ON M5V 2A4',
-    phone: '(416) 555-2345',
-    description: 'Cafe serving Turkish coffee and desserts',
-    tags: ['cafe', 'desserts', 'coffee'],
-    hours: {
-      monday: '8:00 AM - 8:00 PM',
-      tuesday: '8:00 AM - 8:00 PM',
-      wednesday: '8:00 AM - 8:00 PM',
-      thursday: '8:00 AM - 8:00 PM',
-      friday: '8:00 AM - 10:00 PM',
-      saturday: '9:00 AM - 10:00 PM',
-      sunday: '9:00 AM - 8:00 PM'
-    }
-  },
-  {
-    id: '15',
-    name: 'Black Sea Market',
-    category: 'market',
-    coordinates: { lat: 43.7852, lng: -79.4237 },
-    city: 'North York',
-    address: '5000 Yonge St, North York, ON M2N 7E9',
-    phone: '(416) 555-3456',
-    description: 'Turkish and Eastern European grocery store',
-    tags: ['market', 'grocery', 'imported-goods'],
-    hours: {
-      monday: '9:00 AM - 9:00 PM',
-      tuesday: '9:00 AM - 9:00 PM',
-      wednesday: '9:00 AM - 9:00 PM',
-      thursday: '9:00 AM - 9:00 PM',
-      friday: '9:00 AM - 9:00 PM',
-      saturday: '9:00 AM - 8:00 PM',
-      sunday: '10:00 AM - 7:00 PM'
-    }
-  },
-  {
-    id: '16',
-    name: 'Turkish Wellness Center',
-    category: 'health',
-    coordinates: { lat: 43.7731, lng: -79.3458 },
-    city: 'North York',
-    address: '789 Don Mills Rd, North York, ON M3C 1T5',
-    phone: '(416) 555-4567',
-    description: 'Holistic health center with Turkish healing practices',
-    tags: ['healthcare', 'wellness', 'alternative-medicine'],
-    hours: {
-      monday: '10:00 AM - 7:00 PM',
-      tuesday: '10:00 AM - 7:00 PM',
-      wednesday: '10:00 AM - 7:00 PM',
-      thursday: '10:00 AM - 7:00 PM',
-      friday: '10:00 AM - 6:00 PM',
-      saturday: '10:00 AM - 4:00 PM'
     }
   },
   {
@@ -546,6 +486,47 @@ export const locations: Location[] = [
       friday: '7:00 AM - 10:00 PM',
       saturday: '8:00 AM - 8:00 PM',
       sunday: '8:00 AM - 8:00 PM'
+    }
+  },
+  {
+    id: '26',
+    name: 'Ottoman Cuisine',
+    category: 'restaurant',
+    coordinates: { lat: 43.6532, lng: -79.3832 },
+    city: 'Mississauga',
+    address: '789 Burnhamthorpe Rd W, Mississauga, ON L5B 4A5',
+    phone: '(905) 555-4567',
+    website: 'http://ottomancuisine.ca',
+    description: 'Authentic Turkish fine dining experience',
+    tags: ['restaurant', 'fine-dining', 'turkish-cuisine'],
+    hours: {
+      monday: '11:00 AM - 10:00 PM',
+      tuesday: '11:00 AM - 10:00 PM',
+      wednesday: '11:00 AM - 10:00 PM',
+      thursday: '11:00 AM - 10:00 PM',
+      friday: '11:00 AM - 11:00 PM',
+      saturday: '11:00 AM - 11:00 PM',
+      sunday: '12:00 PM - 9:00 PM'
+    }
+  },
+  {
+    id: '40',
+    name: 'Turkish Cultural Exchange',
+    category: 'community',
+    coordinates: { lat: 45.5017, lng: -73.5673 },
+    city: 'Montreal',
+    address: '456 Rue Saint-Catherine O, Montreal, QC H3B 1A2',
+    phone: '(514) 555-9012',
+    website: 'http://turkishculturalmtl.ca',
+    description: 'Montreal-based Turkish cultural center',
+    tags: ['culture', 'community', 'events'],
+    hours: {
+      monday: '9:00 AM - 6:00 PM',
+      tuesday: '9:00 AM - 6:00 PM',
+      wednesday: '9:00 AM - 6:00 PM',
+      thursday: '9:00 AM - 6:00 PM',
+      friday: '9:00 AM - 6:00 PM',
+      saturday: '10:00 AM - 4:00 PM'
     }
   }
 ]; 
