@@ -31,13 +31,13 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-6xl font-bold mb-6 text-brand-primary leading-tight">
-              Kanada'ya Hoş Geldin!
+              Kanada&apos;ya Hoş Geldin!
             </h1>
 
             <p className="text-2xl text-brand-text-secondary mb-12 font-medium max-w-2xl mx-auto leading-relaxed">
-              Kanada'daki yeni yaşamın için topluluk rehberin. İhtiyacınız olan
-              tüm kaynaklara, önemli lokasyonlara ve topluluk desteğine buradan
-              ulaşabilirsin.
+              Kanada&apos;daki yeni yaşamın için topluluk rehberin. İhtiyacınız
+              olan tüm kaynaklara, önemli lokasyonlara ve topluluk desteğine
+              buradan ulaşabilirsin.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -112,8 +112,8 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-brand-text-muted">
-                Kanada'da mahalleler, kiralama süreçleri ve konaklamayla ilgili
-                önemli bilgileri öğrenin.
+                Kanada&apos;da mahalleler, kiralama süreçleri ve konaklamayla
+                ilgili önemli bilgileri öğrenin.
               </CardContent>
             </Card>
 
@@ -132,7 +132,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-brand-text-muted">
-                Sağlık hizmetleri, bankacılık, eğitim ve Kanada'ya yerleşme
+                Sağlık hizmetleri, bankacılık, eğitim ve Kanada&apos;ya yerleşme
                 sürecindeki diğer önemli konular hakkında rehberlere ulaşın.
               </CardContent>
             </Card>
