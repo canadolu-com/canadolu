@@ -131,11 +131,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Next.js](https://nextjs.org/) for the amazing React framework
 - [Shadcn UI](https://ui.shadcn.com/) for beautiful UI components
 - [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS
-- All our [contributors](https://github.com/yourusername/canadolu/graphs/contributors)
 
 ## 📧 Contact
 
 For questions or support, please open an issue or reach out to the maintainers:
 
 - Website: [canadolu.com](https://canadolu.com)
-- GitHub: [@yourusername](https://github.com/yourusername)
+- GitHub: [@canadolu-com](https://github.com/canadolu-com)
