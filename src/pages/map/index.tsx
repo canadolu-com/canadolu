@@ -8,6 +8,13 @@ import {
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   MapPin,
   Phone,
   Clock,
@@ -21,7 +28,7 @@ import {
   Filter,
 } from "lucide-react";
 import type { Location, LocationCategory } from "@/lib/types";
-import { locations } from "@/lib/data/locations";
+import { transformListingsToLocations } from "@/lib/utils/listings";
 
 const mapContainerStyle = {
   width: "100%",
@@ -33,25 +40,6 @@ const center = {
   lat: 43.6532,
   lng: -79.3832, // Toronto coordinates
 };
-
-const cities = [
-  {
-    name: "Tüm Şehirler",
-    value: "all",
-    icon: <MapPin className="h-4 w-4" />,
-    center: { lat: 43.6532, lng: -79.3832 }, // Toronto center as default
-  },
-  ...Array.from(new Set(locations.map((loc) => loc.city))).map((cityName) => {
-    // Find first location in this city to get its coordinates
-    const cityLocation = locations.find((loc) => loc.city === cityName);
-    return {
-      name: cityName,
-      value: cityName,
-      icon: <MapPin className="h-4 w-4" />,
-      center: cityLocation?.coordinates || { lat: 43.6532, lng: -79.3832 }, // Fallback to Toronto if no coordinates
-    };
-  }),
-];
 
 const categories: Array<{
   id: LocationCategory;
@@ -97,19 +85,66 @@ const options = {
 };
 
 export default function MapPage() {
-  const { isLoaded } = useLoadScript({
+  const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
   });
 
+  const [locations, setLocations] = useState<Location[]>([]);
   const [selectedCategory, setSelectedCategory] =
     useState<LocationCategory>("restaurant");
-  const [selectedCity, setSelectedCity] = useState("all");
+  const [selectedCity, setSelectedCity] = useState<string>("all");
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null
   );
   const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
 
-  // Move marker icons configuration here
+  // Load listings data
+  useEffect(() => {
+    const loadListings = async () => {
+      try {
+        const transformedListings = await transformListingsToLocations();
+        setLocations(transformedListings);
+      } catch (error) {
+        console.error("Error loading listings:", error);
+      }
+    };
+    loadListings();
+  }, []);
+
+  // Update cities based on available locations
+  const cities = useMemo(
+    () => [
+      {
+        name: "Tüm Şehirler",
+        value: "all",
+        icon: <MapPin className="h-4 w-4" />,
+        center: { lat: 43.6532, lng: -79.3832 },
+      },
+      ...Array.from(new Set(locations.map((loc) => loc.city)))
+        .filter(Boolean)
+        .map((cityName) => {
+          const cityLocation = locations.find((loc) => loc.city === cityName);
+          return {
+            name: cityName,
+            value: cityName,
+            icon: <MapPin className="h-4 w-4" />,
+            center: cityLocation?.coordinates || {
+              lat: 43.6532,
+              lng: -79.3832,
+            },
+          };
+        }),
+    ],
+    [locations]
+  );
+
+  const handleMapLoad = useCallback((map: google.maps.Map) => {
+    setMap(map);
+    setIsMapReady(true);
+  }, []);
+
+  // Marker icons configuration
   const markerIcons = useMemo(() => {
     if (!isLoaded) return null;
 
@@ -141,10 +176,12 @@ export default function MapPage() {
       filtered = filtered.filter((location) => location.city === selectedCity);
     }
     return filtered;
-  }, [selectedCategory, selectedCity]);
+  }, [locations, selectedCategory, selectedCity]);
 
   const handleMarkerClick = useCallback(
     (location: Location) => {
+      if (!map || !isMapReady) return;
+
       // Toggle selection if clicking the same location
       if (selectedLocation?.id === location.id) {
         setSelectedLocation(null);
@@ -152,22 +189,27 @@ export default function MapPage() {
       }
 
       setSelectedLocation(location);
-      if (map && location.coordinates) {
+
+      if (location.coordinates) {
         map.panTo(location.coordinates);
         map.setZoom(12);
 
-        // Find and scroll the card into view
-        const card = document.getElementById(`location-${location.id}`);
-        if (card) {
-          card.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
+        // Use requestAnimationFrame to ensure the DOM is ready
+        requestAnimationFrame(() => {
+          const card = document.getElementById(`location-${location.id}`);
+          if (card) {
+            card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        });
       }
     },
-    [map, selectedLocation]
+    [map, selectedLocation, isMapReady]
   );
 
   // Add function to open Google Maps
   const openInGoogleMaps = useCallback((location: Location) => {
+    if (!location.address) return;
+
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       `${location.name} ${location.address}`
     )}`;
@@ -175,36 +217,71 @@ export default function MapPage() {
   }, []);
 
   useEffect(() => {
-    if (map) {
+    if (map && isMapReady) {
       const bounds = new google.maps.LatLngBounds();
+      let hasValidLocations = false;
 
       if (filteredLocations.length > 0) {
         filteredLocations.forEach((location) => {
-          bounds.extend(location.coordinates);
+          if (
+            location.coordinates &&
+            typeof location.coordinates.lat === "number" &&
+            typeof location.coordinates.lng === "number"
+          ) {
+            bounds.extend(location.coordinates);
+            hasValidLocations = true;
+          }
         });
 
-        const padded = new google.maps.LatLngBounds(
-          new google.maps.LatLng(
-            bounds.getSouthWest().lat() - 0.1,
-            bounds.getSouthWest().lng() - 0.1
-          ),
-          new google.maps.LatLng(
-            bounds.getNorthEast().lat() + 0.1,
-            bounds.getNorthEast().lng() + 0.1
-          )
-        );
-        map.fitBounds(padded);
+        if (hasValidLocations) {
+          try {
+            const padded = new google.maps.LatLngBounds(
+              new google.maps.LatLng(
+                bounds.getSouthWest().lat() - 0.1,
+                bounds.getSouthWest().lng() - 0.1
+              ),
+              new google.maps.LatLng(
+                bounds.getNorthEast().lat() + 0.1,
+                bounds.getNorthEast().lng() + 0.1
+              )
+            );
+            map.fitBounds(padded);
+          } catch (error) {
+            console.error("Error fitting bounds:", error);
+            map.setCenter(center);
+            map.setZoom(10);
+          }
+        } else {
+          map.setCenter(center);
+          map.setZoom(10);
+        }
       } else {
         const selectedCityData = cities.find(
           (city) => city.value === selectedCity
         );
-        if (selectedCityData) {
+        if (selectedCityData?.center) {
           map.setCenter(selectedCityData.center);
           map.setZoom(12);
+        } else {
+          map.setCenter(center);
+          map.setZoom(10);
         }
       }
     }
-  }, [filteredLocations, map, selectedCity]);
+  }, [filteredLocations, map, selectedCity, cities, isMapReady]);
+
+  if (loadError) {
+    return (
+      <MainLayout>
+        <div className="flex items-center justify-center min-h-[600px] bg-brand-bg-light">
+          <div className="text-brand-text-primary text-lg">
+            Harita yüklenirken bir hata oluştu. Lütfen daha sonra tekrar
+            deneyin.
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   if (!isLoaded) {
     return (
@@ -232,7 +309,7 @@ export default function MapPage() {
         {/* Combined Filters Section */}
         <div className="mb-8">
           <div className="bg-brand-snow-white border border-brand-border-light rounded-lg p-4">
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-[300px_1fr] gap-6">
               {/* City Selection */}
               <div>
                 <div className="flex items-center justify-between mb-3">
@@ -243,57 +320,39 @@ export default function MapPage() {
                     </h3>
                   </div>
                   <div className="text-brand-text-secondary text-sm">
-                    {filteredLocations.length} mekan bulundu
+                    {filteredLocations.length} mekan
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                  {cities.map((city) => {
-                    const cityCount = locations.filter((loc) =>
-                      city.value === "all" ? true : loc.city === city.value
-                    ).length;
-
-                    return (
-                      <button
-                        key={city.value}
-                        onClick={() => setSelectedCity(city.value)}
-                        className={`
-                          flex flex-col items-center justify-center p-3 rounded-lg
-                          transition-all duration-200 
-                          ${
-                            selectedCity === city.value
-                              ? "bg-brand-primary text-brand-snow-white shadow-sm"
-                              : "bg-brand-bg-light text-brand-text-primary hover:bg-brand-bg-light/80"
-                          }
-                        `}
-                      >
-                        {city.icon}
-                        <span className="text-sm font-medium mt-1">
-                          {city.name}
-                        </span>
-                        <span
-                          className={`text-xs mt-1 ${
-                            selectedCity === city.value
-                              ? "text-brand-snow-white/90"
-                              : "text-brand-text-secondary"
-                          }`}
-                        >
-                          {cityCount}{" "}
-                          {cityCount === 1 ? "location" : "locations"}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+                <Select value={selectedCity} onValueChange={setSelectedCity}>
+                  <SelectTrigger className="w-full bg-white text-gray-900">
+                    <SelectValue placeholder="Şehir seçin">
+                      {cities.find((city) => city.value === selectedCity)
+                        ?.name || "Şehir seçin"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cities.map((city) => (
+                      <SelectItem key={city.value} value={city.value}>
+                        <div className="flex items-center">
+                          {city.icon}
+                          <span className="ml-2">{city.name}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Category Selection */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Filter className="h-5 w-5 text-brand-primary" />
-                  <h3 className="text-brand-text-primary font-medium">
-                    Filter by Category
-                  </h3>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Filter className="h-5 w-5 text-brand-primary" />
+                    <h3 className="text-brand-text-primary font-medium">
+                      Kategori Seç
+                    </h3>
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -315,7 +374,7 @@ export default function MapPage() {
                           transition-all duration-200 
                           ${
                             selectedCategory === category.id
-                              ? "bg-brand-primary text-brand-snow-white shadow-sm"
+                              ? "bg-brand-primary text-white shadow-sm"
                               : "bg-brand-bg-light text-brand-text-primary hover:bg-brand-bg-light/80"
                           }
                           ${
@@ -333,9 +392,9 @@ export default function MapPage() {
                           </span>
                         </div>
                         <span
-                          className={`text-xs ${
+                          className={`text-xs ml-2 ${
                             selectedCategory === category.id
-                              ? "text-brand-snow-white/90"
+                              ? "text-white/90"
                               : "text-brand-text-secondary"
                           }`}
                         >
@@ -369,7 +428,7 @@ export default function MapPage() {
                   mapContainerStyle={mapContainerStyle}
                   zoom={10}
                   center={center}
-                  onLoad={setMap}
+                  onLoad={handleMapLoad}
                   options={{
                     styles: [
                       {
@@ -383,32 +442,41 @@ export default function MapPage() {
                     fullscreenControl: false,
                   }}
                 >
-                  <GoogleMarkerClusterer options={options}>
-                    {(clusterer) => (
-                      <>
-                        {filteredLocations.map((location) => (
-                          <Marker
-                            key={location.id}
-                            position={location.coordinates}
-                            onClick={() => handleMarkerClick(location)}
-                            clusterer={clusterer}
-                            icon={
-                              markerIcons
-                                ? selectedLocation?.id === location.id
-                                  ? markerIcons.selected
-                                  : markerIcons.default
-                                : undefined
-                            }
-                            animation={
-                              selectedLocation?.id === location.id
-                                ? google.maps.Animation.BOUNCE
-                                : undefined
-                            }
-                          />
-                        ))}
-                      </>
-                    )}
-                  </GoogleMarkerClusterer>
+                  {isMapReady && (
+                    <GoogleMarkerClusterer options={options}>
+                      {(clusterer) => (
+                        <>
+                          {filteredLocations
+                            .filter(
+                              (location) =>
+                                location.coordinates &&
+                                typeof location.coordinates.lat === "number" &&
+                                typeof location.coordinates.lng === "number"
+                            )
+                            .map((location) => (
+                              <Marker
+                                key={location.id}
+                                position={location.coordinates}
+                                onClick={() => handleMarkerClick(location)}
+                                clusterer={clusterer}
+                                icon={
+                                  markerIcons
+                                    ? selectedLocation?.id === location.id
+                                      ? markerIcons.selected
+                                      : markerIcons.default
+                                    : undefined
+                                }
+                                animation={
+                                  selectedLocation?.id === location.id
+                                    ? google.maps.Animation.BOUNCE
+                                    : undefined
+                                }
+                              />
+                            ))}
+                        </>
+                      )}
+                    </GoogleMarkerClusterer>
+                  )}
                 </GoogleMap>
               </CardContent>
             </Card>
@@ -454,7 +522,11 @@ export default function MapPage() {
                               </CardTitle>
                               <div className="flex items-center gap-2 text-sm text-brand-text-secondary mt-1">
                                 <Navigation className="h-4 w-4" />
-                                <span>{location.address.split(",")[0]}</span>
+                                <span>
+                                  {location.address
+                                    ? location.address.split(",")[0]
+                                    : "Adres belirtilmemiş"}
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -503,17 +575,19 @@ export default function MapPage() {
                       )}
 
                       <div className="space-y-3">
-                        <div className="flex items-start gap-2">
-                          <Navigation className="h-5 w-5 mt-1 flex-shrink-0 text-brand-primary" />
-                          <div>
-                            <p className="text-brand-text-primary">
-                              {location.address}
-                            </p>
-                            <p className="text-sm text-brand-text-secondary">
-                              {location.city}
-                            </p>
+                        {location.address && (
+                          <div className="flex items-start gap-2">
+                            <Navigation className="h-5 w-5 mt-1 flex-shrink-0 text-brand-primary" />
+                            <div>
+                              <p className="text-brand-text-primary">
+                                {location.address}
+                              </p>
+                              <p className="text-sm text-brand-text-secondary">
+                                {location.city}
+                              </p>
+                            </div>
                           </div>
-                        </div>
+                        )}
 
                         {location.phone && (
                           <a
@@ -588,16 +662,18 @@ export default function MapPage() {
                             <MapPin className="h-4 w-4" />
                             Haritada Göster
                           </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openInGoogleMaps(location);
-                            }}
-                            className="text-sm text-brand-primary hover:text-brand-primary/80 flex items-center gap-1"
-                          >
-                            <Globe className="h-4 w-4" />
-                            Google Maps&apos;te Aç
-                          </button>
+                          {location.address && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openInGoogleMaps(location);
+                              }}
+                              className="text-sm text-brand-primary hover:text-brand-primary/80 flex items-center gap-1"
+                            >
+                              <Globe className="h-4 w-4" />
+                              Google Maps&apos;te Aç
+                            </button>
+                          )}
                         </div>
                       </div>
                     </CardContent>
