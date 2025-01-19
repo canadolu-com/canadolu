@@ -12,6 +12,7 @@ import {
   Car,
   DollarSign,
   Globe,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 import { guides } from "@/lib/data/guides";
@@ -21,6 +22,7 @@ import { MDXProvider } from "@mdx-js/react";
 
 // Import MDX content and components
 import HousingGuide from "@/content/guides/housing.mdx";
+import CitiesGuide from "@/content/guides/cities.mdx";
 import { MDXComponents } from "@/components/mdx/MDXComponents";
 
 const iconMap = {
@@ -32,6 +34,7 @@ const iconMap = {
   Car,
   DollarSign,
   Globe,
+  MapPin,
 };
 
 export default function GuidePage({ guide }: GuidePageProps) {
@@ -50,7 +53,12 @@ export default function GuidePage({ guide }: GuidePageProps) {
   }
 
   const Icon = iconMap[guide.iconName as keyof typeof iconMap];
-  const GuideContent = guide.type === "housing" ? HousingGuide : null;
+  const GuideContent =
+    guide.type === "housing"
+      ? HousingGuide
+      : guide.type === "cities"
+      ? CitiesGuide
+      : null;
 
   return (
     <MainLayout>
