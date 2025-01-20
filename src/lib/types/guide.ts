@@ -10,6 +10,7 @@ export const GUIDE_TYPES = {
   banking: 'banking',
   immigration: 'immigration',
   culture: 'culture',
+  cities: 'cities',
 } as const;
 
 /**

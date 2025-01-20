@@ -31,4 +31,8 @@ export interface Location {
   hours?: BusinessHours;
   /** Tags for filtering and categorization */
   tags?: string[];
+  /** Rating of the location */
+  rating?: number;
+  /** Indicates if the location is sponsored */
+  isSponsored?: boolean;
 } 

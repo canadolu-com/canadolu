@@ -73,4 +73,13 @@ export const guides: GuideCategory[] = [
     color: "bg-pink-100 text-pink-600",
     slug: "cultural-integration",
   },
+  {
+    id: '9',
+    type: 'cities',
+    title: "Şehirler",
+    description: "Kanada'nın popüler şehirleri ve yaşam koşulları",
+    iconName: "MapPin",
+    color: "bg-indigo-100 text-indigo-600",
+    slug: "cities-guide",
+  },
 ]; 

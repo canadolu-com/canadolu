@@ -15,7 +15,7 @@ export const defaultFrontmatter: MDXFrontmatter = {
 // Import all guide MDX files
 const guideModules = {
   'housing-guide': () => import('@/content/guides/housing.mdx'),
-  'healthcare-system': () => import('@/content/guides/healthcare.mdx'),
+  'cities-guide': () => import('@/content/guides/cities.mdx'),
 };
 
 type MDXModule = {

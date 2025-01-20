@@ -10,6 +10,7 @@ import {
   Car,
   DollarSign,
   Globe,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 import { guides } from "@/lib/data/guides";
@@ -23,6 +24,7 @@ const iconMap = {
   Car,
   DollarSign,
   Globe,
+  MapPin,
 };
 
 export default function GuidesPage() {
