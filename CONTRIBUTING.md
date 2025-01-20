@@ -76,7 +76,14 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 ## 📝 Pull Request Process
 
 1. **Before Submitting**
-   - Ensure your code follows our guidelines
+   - Ensure your branch is up to date with `development`:
+     ```bash
+     git checkout development
+     git pull origin development
+     git checkout your-branch
+     git rebase development
+     ```
+   - Ensure code follows our guidelines
    - Update documentation if needed
    - Add tests if applicable
    - Run `yarn lint` and `yarn type-check`
@@ -84,14 +91,14 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 
 2. **Submitting Changes**
    - Push to your fork
-   - Submit a Pull Request (PR) to the `main` branch
+   - Submit a Pull Request (PR) to the `development` branch ONLY
    - Fill out the PR template completely
    - Link any related issues
 
 3. **PR Review Process**
    - Maintainers will review your PR
    - Address any requested changes
-   - Once approved, maintainers will merge your PR
+   - Once approved, maintainers will merge your PR into `development`
 
 ## 🐛 Bug Reports
 
@@ -130,6 +137,45 @@ Submit feature requests through GitHub Issues:
   test: add tests
   chore: update dependencies
   ```
+
+## 🌳 Branch Flow
+
+### Branch Structure
+- `main`: Production branch (protected, no direct PRs)
+- `staging`: Pre-production testing (protected, no direct PRs)
+- `development`: Main development branch (all PRs target this branch)
+- Feature/fix branches: Created from and merged into `development`
+
+### Branch Rules
+1. **Always branch from `development`**
+   ```bash
+   git checkout development
+   git pull origin development
+   git checkout -b feature/your-feature
+   ```
+
+2. **Never work directly on**:
+   - `main` branch
+   - `staging` branch
+   - `development` branch
+
+3. **Branch Naming**:
+   - Features: `feature/your-feature-name`
+   - Fixes: `fix/bug-description`
+   - Docs: `docs/documentation-update`
+   - Chore: `chore/maintenance-task`
+
+4. **Branch Lifecycle**:
+   - Create branch from `development`
+   - Develop and test your changes
+   - Submit PR to `development`
+   - After approval and merge, delete your branch
+
+### Deployment Flow
+`development` → `staging` → `main`
+- Changes flow from development to staging for testing
+- After testing, changes are promoted to main for production
+- Only repository maintainers handle staging and main branch deployments
 
 ## 🤝 Getting Help
 
